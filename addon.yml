@@ -1,0 +1,21 @@
+---
+name: pks-cluster-name-override
+
+releases:
+- name: cluster-override
+  version: 0+dev.1
+
+addons:
+  - name: cname-override
+    jobs:
+    - name: kcm-cname
+      release: cluster-override
+
+    include: 
+      jobs:
+      - name: kube-controller-manager
+        release: kubo
+        consumes: {kubernetes-workers: nil}
+
+      stemcell:
+      - os: ubuntu-xenial
