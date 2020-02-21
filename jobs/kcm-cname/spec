@@ -1,0 +1,13 @@
+---
+name: kcm-cname
+
+templates:
+  bin/pre-start.erb: bin/pre-start
+
+packages: []
+
+properties: {}
+
+consumes:
+- name: kubernetes-workers
+  type: kubernetes-workers
