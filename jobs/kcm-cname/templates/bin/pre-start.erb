@@ -1,19 +1,4 @@
 #!/bin/sh
 
-<% 
-   cluster_uuid = "kubernetes"
-   k8s_args = link('kubernetes-workers').p('k8s-args')
-   k8s_args.each do |flag, value|
-      if flag == "node-labels" 
-         value.split(',').map { |kv| Hash[*kv.split('=')] }.map { |entry| entry.map { |k,v|
-           if k == "pks-system/cluster.uuid" 
-            cluster_uuid = v.match(/service-instance_(.*)/)[1]
-           end
-         }
-        }
-      end
-   end
-%>
 
-
-sed -i '/^  args:/a\  - "<%= cluster_uuid -%>"' /var/vcap/jobs/kube-controller-manager/config/bpm.yml
+sed -i '/^  args:/a\  - "<%= p("cluster-name") -%>"' /var/vcap/jobs/kube-controller-manager/config/bpm.yml
