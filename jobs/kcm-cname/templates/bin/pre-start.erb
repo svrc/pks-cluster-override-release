@@ -1,4 +1,7 @@
 #!/bin/sh
 
-
-sed -i '/^  args:/a\  - "<%= p("cluster-name") -%>"' /var/vcap/jobs/kube-controller-manager/config/bpm.yml
+<%
+aliases = File.read('/var/vcap/jobs/kubo-dns-aliases/dns/aliases.json')
+cluster_uuid = aliases.match(/service-instance-([0-9a-f\-]*)(\.bosh)/)[1]
+%>
+sed -i '/^  args:/a\  - "<%= cluster_uuid -%>"' /var/vcap/jobs/kube-controller-manager/config/bpm.yml

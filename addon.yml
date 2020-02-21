@@ -15,7 +15,6 @@ addons:
       jobs:
       - name: kube-controller-manager
         release: kubo
-        consumes: {kubernetes-workers: nil}
 
       stemcell:
       - os: ubuntu-xenial
