@@ -1,7 +1,12 @@
 #!/bin/sh
 
-<%
-aliases = File.read('/var/vcap/jobs/kubo-dns-aliases/dns/aliases.json')
-cluster_uuid = aliases.match(/service-instance-([0-9a-f\-]*)(\.bosh)/)[1]
-%>
-sed -i '/^  args:/a\  - "<%= cluster_uuid -%>"' /var/vcap/jobs/kube-controller-manager/config/bpm.yml
+cluster_uuid=$(grep -oP '(?<=infra\.service-instance-)[0-9a-f\-]*(?=\.bosh)' /var/vcap/jobs/kubo-dns-aliases/dns/aliases.json | head -1)
+if grep -q "^  .*cluster-name=" /var/vcap/jobs/kube-controller-manager/config/bpm.yml 
+then
+  echo "replacing"
+  sed -i "s/^  - \"--cluster-name=.*$/  - \"--cluster-name=$cluster_uuid\"/" /var/vcap/jobs/kube-controller-manager/config/bpm.yml
+else
+  echo "adding"
+  sed -i "/^  args:/a\  - \"--cluster-name=$cluster_uuid\"" /var/vcap/jobs/kube-controller-manager/config/bpm.yml
+fi
+
