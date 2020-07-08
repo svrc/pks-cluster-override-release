@@ -1,9 +1,10 @@
-# PKS Cluster Name Override Addon
+# Tanzu Kubernetes Grid Integrated (TKGI) / PKS  Cluster Name Override Addon
 
 ## What does this do?
 
-This will ensure that Kube Controller Manager in PKS clusters gets a cluster-name equal to the GUID of the cluster itself.  
+This will ensure that Kube Controller Manager in TKGI/PKS clusters gets a cluster-name equal to the GUID of the cluster itself.  
 
+Note;  This is fixed as of PKS 1.7 and no longer necessary
 
 ## How do I install it?
 
