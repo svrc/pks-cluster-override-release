@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cluster_uuid=$(grep -oP '(?<=infra\.service-instance-)[0-9a-f\-]*(?=\.bosh)' /var/vcap/jobs/kubo-dns-aliases/dns/aliases.json | head -1)
+cluster_uuid=$(grep -oP '(?<=\.service-instance-)[0-9a-f\-]*(?=\.bosh)' /var/vcap/jobs/kubo-dns-aliases/dns/aliases.json | head -1)
 if grep -q "^  .*cluster-name=" /var/vcap/jobs/kube-controller-manager/config/bpm.yml 
 then
   echo "replacing"
